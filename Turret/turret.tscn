@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=3 uid="uid://uum7cwh3h22h"]
+
+[ext_resource type="Script" path="res://Turret/turret.gd" id="1_1pg0p"]
+[ext_resource type="PackedScene" uid="uid://icuqtjcgglwv" path="res://Turret/projectile.tscn" id="2_o6c23"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ml4g2"]
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ejqlk"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_k6w4m"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wm3ql"]
+top_radius = 0.18
+bottom_radius = 0.22
+height = 0.15
+
+[sub_resource type="Animation" id="Animation_7qbfw"]
+resource_name = "Fire"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.717839, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0.718, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.233333, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_5pyvs"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TurretBase/TurretTop/TurretBarrel:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.717839, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v0k85"]
+_data = {
+"Fire": SubResource("Animation_7qbfw"),
+"RESET": SubResource("Animation_5pyvs")
+}
+
+[node name="Turret" type="Node3D"]
+script = ExtResource("1_1pg0p")
+projectile = ExtResource("2_o6c23")
+
+[node name="TurretBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_ml4g2")
+
+[node name="TurretTop" type="MeshInstance3D" parent="TurretBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_ejqlk")
+
+[node name="TurretBarrel" type="MeshInstance3D" parent="TurretBase/TurretTop"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.717839)
+mesh = SubResource("CylinderMesh_k6w4m")
+
+[node name="TurretNozzle" type="MeshInstance3D" parent="TurretBase/TurretTop/TurretBarrel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16954, 0)
+mesh = SubResource("CylinderMesh_wm3ql")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_v0k85")
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
