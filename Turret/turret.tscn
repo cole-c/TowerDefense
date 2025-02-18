@@ -1,25 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://uum7cwh3h22h"]
+[gd_scene load_steps=8 format=3 uid="uid://uum7cwh3h22h"]
 
 [ext_resource type="Script" path="res://Turret/turret.gd" id="1_1pg0p"]
 [ext_resource type="PackedScene" uid="uid://icuqtjcgglwv" path="res://Turret/projectile.tscn" id="2_o6c23"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ml4g2"]
-height = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ejqlk"]
-top_radius = 0.6
-bottom_radius = 0.6
-height = 0.6
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_k6w4m"]
-top_radius = 0.15
-bottom_radius = 0.15
-height = 0.3
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_wm3ql"]
-top_radius = 0.18
-bottom_radius = 0.22
-height = 0.15
+[ext_resource type="PackedScene" uid="uid://bv16e5rv6b8vq" path="res://Assets/Cannon.glb" id="3_1j8kq"]
+[ext_resource type="PackedScene" uid="uid://7klgsemwtdsw" path="res://Assets/TurretBase.glb" id="4_rphme"]
 
 [sub_resource type="Animation" id="Animation_7qbfw"]
 resource_name = "Fire"
@@ -104,21 +88,17 @@ _data = {
 script = ExtResource("1_1pg0p")
 projectile = ExtResource("2_o6c23")
 
-[node name="TurretBase" type="MeshInstance3D" parent="."]
+[node name="TurretBase" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CylinderMesh_ml4g2")
 
-[node name="TurretTop" type="MeshInstance3D" parent="TurretBase"]
+[node name="TurretTop" type="Node3D" parent="TurretBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-mesh = SubResource("CylinderMesh_ejqlk")
 
-[node name="TurretBarrel" type="MeshInstance3D" parent="TurretBase/TurretTop"]
+[node name="TurretBarrel" type="Node3D" parent="TurretBase/TurretTop"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.717839)
-mesh = SubResource("CylinderMesh_k6w4m")
 
-[node name="TurretNozzle" type="MeshInstance3D" parent="TurretBase/TurretTop/TurretBarrel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16954, 0)
-mesh = SubResource("CylinderMesh_wm3ql")
+[node name="Cannon" parent="TurretBase/TurretTop/TurretBarrel" instance=ExtResource("3_1j8kq")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.712303, 1.33771)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -127,5 +107,7 @@ autostart = true
 libraries = {
 "": SubResource("AnimationLibrary_v0k85")
 }
+
+[node name="TurretBase2" parent="." instance=ExtResource("4_rphme")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

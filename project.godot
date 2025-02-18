@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Base=""
 enemy_area=""
+Bank=""
 
 [input]
 

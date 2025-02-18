@@ -9,7 +9,6 @@ var current_health: int:
 		var red: Color = Color.RED
 		var white: Color = Color.WHITE
 		label_3d.modulate = red.lerp(white, float(current_health)/float(max_health))
-		print("Health was changed to: " + str(health_in))
 		if current_health < 1:
 			get_tree().reload_current_scene()
 
@@ -18,4 +17,3 @@ func _ready() -> void:
 
 func take_damage() -> void:
 	current_health -= 1
-	print("damage dealt to base!")

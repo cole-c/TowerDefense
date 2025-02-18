@@ -1,19 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://c86ik2frj7455"]
 
 [ext_resource type="Script" path="res://Base/base.gd" id="1_lm1y3"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xb7b8"]
-albedo_color = Color(0.886275, 0, 0.0196078, 1)
+[ext_resource type="PackedScene" uid="uid://boenfsl1tqvc2" path="res://Assets/Base.glb" id="2_4voox"]
 
 [node name="Base" type="Node3D" groups=["Base"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("1_lm1y3")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-radius = 2.0
-height = 4.0
-sides = 32
-material = SubResource("StandardMaterial3D_xb7b8")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
@@ -21,3 +13,6 @@ billboard = 1
 text = "HP"
 font_size = 400
 outline_size = 100
+
+[node name="Base" parent="." instance=ExtResource("2_4voox")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
