@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c86ik2frj7455"]
+[gd_scene load_steps=4 format=3 uid="uid://c86ik2frj7455"]
 
 [ext_resource type="Script" path="res://Base/base.gd" id="1_lm1y3"]
+[ext_resource type="FontFile" uid="uid://burr0tje515a" path="res://Assets/Press_Start_2P/PressStart2P-Regular.ttf" id="2_0dakm"]
 [ext_resource type="PackedScene" uid="uid://boenfsl1tqvc2" path="res://Assets/Base.glb" id="2_4voox"]
 
 [node name="Base" type="Node3D" groups=["Base"]]
@@ -11,6 +12,7 @@ script = ExtResource("1_lm1y3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 billboard = 1
 text = "HP"
+font = ExtResource("2_0dakm")
 font_size = 400
 outline_size = 100
 

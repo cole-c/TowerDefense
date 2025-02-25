@@ -1,8 +1,9 @@
 extends Node
 
-@export var game_length := 30.0
+@export var game_length := 180.0
 @export var spawn_time_curve: Curve
 @export var enemy_health_curve: Curve
+@export var game_speed := 1
 
 @onready var timer: Timer = $Timer
 
@@ -11,6 +12,7 @@ signal stop_spawning_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	timer.start(game_length)
+	Engine.time_scale = game_speed
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
